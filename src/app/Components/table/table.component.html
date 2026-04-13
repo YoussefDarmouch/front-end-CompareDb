@@ -1,0 +1,133 @@
+<!-- DATA TABLE -->
+<div *ngIf="dataRows?.length">
+
+  <h3>Data Differences</h3>
+
+  <table class="dark-table">
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Row</th>
+        <th>Column</th>
+        <th>{{db1}}</th>
+        <th>{{db2}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of dataRows">
+        <td>{{ row.table }}</td>
+        <td>{{ row.row }}</td>
+        <td>{{ row.column }}</td>
+
+        <td [ngClass]="{'diff': row.d1 !== row.d2}">
+          {{ row.d1 }}
+        </td>
+
+        <td [ngClass]="{'diff': row.d1 !== row.d2}">
+          {{ row.d2 }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+
+<!-- TYPES TABLE -->
+<div *ngIf="typesRows?.length">
+
+  <h3>Type Differences</h3>
+
+  <table class="dark-table">
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Column</th>
+        <th>{{db1}}</th>
+        <th>{{db2}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of typesRows">
+        <td>{{ row.table }}</td>
+        <td>{{ row.column }}</td>
+
+        <td [ngClass]="{'diff': row.d1 !== row.d2}">
+          {{ row.d1 }}
+        </td>
+
+        <td [ngClass]="{'diff': row.d1 !== row.d2}">
+          {{ row.d2 }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+<div *ngIf="columnsRows?.length">
+
+  <h3>Column Differences</h3>
+
+  <table class="dark-table">
+
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>Column</th>
+        <th>Exists in</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of columnsRows">
+        <td>{{ row.table }}</td>
+        <td>{{ row.column }}</td>
+
+        <td [ngClass]="{
+          'db1': row.onlyIn === 'db1 only',
+          'db2': row.onlyIn === 'db2 only'
+        }">
+          {{ row.onlyIn }}
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>
+<div *ngIf="tablesRows?.length">
+
+  <h3>Missing Tables</h3>
+ 
+
+  <table class="dark-table">
+
+    <thead>
+      <tr>
+        <th>Table</th>
+        <th>{{db1}}</th>
+        <th>{{db2}}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of tablesRows">
+        <td>{{ row.table }}</td>
+
+        <td [ngClass]="{'bad': row.d1.includes('tables')}">
+          {{ row.d1 }}
+        </td>
+
+        <td [ngClass]="{'bad': row.d2.includes('tables')}">
+          {{ row.d2 }}
+        </td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>

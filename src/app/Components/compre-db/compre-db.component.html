@@ -1,0 +1,163 @@
+<div class="app">
+
+  <div class="page-header">
+    <h1 class="page-title">Compare databases</h1>
+    <p class="page-sub">Connect two databases and select what to compare</p>
+  </div>
+
+  <div class="db-grid">
+
+    <!-- DB 1 -->
+    <div class="db-card">
+      <div class="card-header">
+        <div class="card-icon src">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <ellipse cx="8" cy="4" rx="6" ry="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 4v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 8v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V8" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span class="card-title">Database 1</span>
+        <span class="card-badge src">source</span>
+      </div>
+      <div class="field">
+        <label>Host</label>
+        <input type="text" placeholder="127.0.0.1" [(ngModel)]="db1.host" />
+      </div>
+      <div class="field">
+        <label>Database name</label>
+        <input type="text" placeholder="my_database" [(ngModel)]="db1.databaseName" />
+      </div>
+      <div class="field">
+        <label>Port</label>
+        <input type="text" placeholder="3309" [(ngModel)]="db1.port" />
+      </div>
+      <div class="field">
+        <label>User</label>
+        <input type="text" placeholder="admin" [(ngModel)]="db1.user" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" [(ngModel)]="db1.password" />
+      </div>
+    </div>
+
+    <!-- DB 2 -->
+    <div class="db-card">
+      <div class="card-header">
+        <div class="card-icon tgt">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <ellipse cx="8" cy="4" rx="6" ry="2.5" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 4v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V4" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M2 8v4c0 1.38 2.69 2.5 6 2.5s6-1.12 6-2.5V8" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span class="card-title">Database 2</span>
+        <span class="card-badge tgt">target</span>
+      </div>
+      <div class="field">
+        <label>Host</label>
+        <input type="text" placeholder="127.0.0.1" [(ngModel)]="db2.host" />
+      </div>
+      <div class="field">
+        <label>Database name</label>
+        <input type="text" placeholder="my_database" [(ngModel)]="db2.databaseName" />
+      </div>
+      <div class="field">
+        <label>Port</label>
+        <input type="text" placeholder="3309" [(ngModel)]="db2.port" />
+      </div>
+      <div class="field">
+        <label>User</label>
+        <input type="text" placeholder="admin" [(ngModel)]="db2.user" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••" [(ngModel)]="db2.password" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comparison options -->
+  <div class="checks-card">
+    <p class="section-label">Select comparison</p>
+    <div class="checks-grid">
+      <label class="check-item" [class.active]="TypeChek.columns">
+        <input type="checkbox" [(ngModel)]="TypeChek.columns" /> Columns
+      </label>
+      <label class="check-item" [class.active]="TypeChek.data">
+        <input type="checkbox" [(ngModel)]="TypeChek.data" /> Data
+      </label>
+      <label class="check-item" [class.active]="TypeChek.tables">
+        <input type="checkbox" [(ngModel)]="TypeChek.tables" /> Tables
+      </label>
+      <label class="check-item" [class.active]="TypeChek.types">
+        <input type="checkbox" [(ngModel)]="TypeChek.types" /> Types
+      </label>
+      <label class="check-item" [class.active]="TypeChek.functions">
+        <input type="checkbox" [(ngModel)]="TypeChek.functions" /> Functions
+      </label>
+      <label class="check-item" [class.active]="TypeChek.procedures">
+        <input type="checkbox" [(ngModel)]="TypeChek.procedures" /> Procedures
+      </label>
+      <label class="check-item" [class.active]="TypeChek.triggers">
+        <input type="checkbox" [(ngModel)]="TypeChek.triggers" /> Triggers
+      </label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="run-btn" (click)="runCompre()">Run compare</button>
+  </div>
+
+
+<div *ngIf="TypeChek.data">
+   <p *ngIf="dataStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [dataRows]="dataRows" [db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+<div *ngIf="TypeChek.types" >
+   <p *ngIf="typesStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [typesRows]="typesRows"[db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+<div *ngIf="TypeChek.columns">
+   <p *ngIf="typesStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [columnsRows]="columnsRows"[db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+<div *ngIf="TypeChek.tables">
+  
+   <p *ngIf="tableStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [tablesRows]="tablesRows"[db1]="db1.databaseName" [db2]="db2.databaseName" ></app-table>
+</div>
+<div *ngIf="TypeChek.functions">
+   <p *ngIf="functionsStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [functionsRows]="functionsRows"[db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+<div *ngIf="TypeChek.procedures">
+   <p *ngIf="proceduresStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [proceduresRows]="proceduresRows"[db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+<div *ngIf="TypeChek.triggers">
+   <p *ngIf="triggersStatus === 'no-diff'" class="no-diff">
+    ✅ No differences found
+  </p>
+<app-table [triggersRows]="triggersRows"[db1]="db1.databaseName" [db2]="db2.databaseName"></app-table>
+</div>
+
+
+
+
+
+</div>
